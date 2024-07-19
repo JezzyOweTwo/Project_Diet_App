@@ -1,1 +1,9 @@
-<h1>Hi from pee pee land</h1>
+<script>
+    import Header from '../../../components/header/header.svelte';
+  </script>
+  
+  <main>
+    <Header/>
+    <!-- Other content -->
+  </main>
+  
