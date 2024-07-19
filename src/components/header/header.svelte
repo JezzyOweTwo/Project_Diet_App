@@ -1,5 +1,5 @@
 <script>
-  let navItems = ['Recipes', 'Meal Plan', 'Shopping List', 'Products', 'Profile'];
+  let navItems = ['Recipes', 'Meal Plan', 'Profile'];
 </script>
 
 <style>
