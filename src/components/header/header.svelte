@@ -1,5 +1,5 @@
 <script>
-  let navItems = [{name:`Recipes`,href:`recipes`},{name:`Meal Plan`, href: `mealplans`}, {name: `Profile`, href: `profile`}];
+  let navItems = [{name:`Recipes`,href:`recipes`},{name:`Meal Plan`, href: `meal-plans`}, {name: `Profile`, href: `profile`}];
 </script>
 
 <style>
