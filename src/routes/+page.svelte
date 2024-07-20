@@ -5,7 +5,7 @@
 
 </p>
 
-<button on:click={run}>Press me bitch ass nigga!</button>
+<button on:click={run}>Press me</button>
 
 <script>
 	async function run() {
