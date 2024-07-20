@@ -1,5 +1,5 @@
 <script>
-  let navItems = ['Recipes', 'Meal Plan', 'Profile'];
+  let navItems = [{name:`Recipes`,href:`recipes`},{name:`Meal Plan`, href: `mealplans`}, {name: `Profile`, href: `profile`}];
 </script>
 
 <style>
@@ -39,7 +39,7 @@
   <nav>
     <ul class="nav-links">
       {#each navItems as item}
-        <li><a href="#">{item}</a></li>
+        <li><a href={`/${item.href}`}>{item.name}</a></li>
       {/each}
     </ul>
   </nav>
