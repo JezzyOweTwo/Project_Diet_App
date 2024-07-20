@@ -32,10 +32,16 @@
     font-size: 1.5rem;
     font-weight: bold;
   }
+
+    a { text-decoration: none; color: inherit; }
+a:visited { text-decoration: none; color: inherit;}
+a:hover { text-decoration: none; color: inherit; }
+a:focus { text-decoration: none; color: inherit; }
+a:hover, a:active { text-decoration: none; color: inherit;}
 </style>
 
 <header>
-  <div class="logo">Recipe Manager</div>
+  <div class="logo"><a href="/home"> Recipe Manager</a></div>
   <nav>
     <ul class="nav-links">
       {#each navItems as item}
