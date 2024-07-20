@@ -69,77 +69,80 @@
       // Any initialization code can go here
     });
   </script>
-  <body>
+  
     <main>
-        <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
+
+        <section class="container">
+            <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
       
-        <form on:submit|preventDefault={handleSubmit}>
-          <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" bind:value={email} required>
-          </div>
-      
-          <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" bind:value={password} on:input={() => checkPasswordStrength(password)} required>
-            {#if !isLogin}
-              <div class="password-strength">
-                Password strength: 
-                <span class="strength-{passwordStrength}">
-                  {passwordStrength === 0 ? 'Weak' : passwordStrength === 1 ? 'Medium' : passwordStrength === 2 ? 'Strong' : 'Very Strong'}
-                </span>
+            <form on:submit|preventDefault={handleSubmit}>
+              <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" bind:value={email} required>
+              </div>
+          
+              <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" bind:value={password} on:input={() => checkPasswordStrength(password)} required>
+                {#if !isLogin}
+                  <div class="password-strength">
+                    Password strength: 
+                    <span class="strength-{passwordStrength}">
+                      {passwordStrength === 0 ? 'Weak' : passwordStrength === 1 ? 'Medium' : passwordStrength === 2 ? 'Strong' : 'Very Strong'}
+                    </span>
+                  </div>
+                {/if}
+              </div>
+          
+              {#if !isLogin}
+                <div>
+                  <label for="confirmPassword">Confirm Password:</label>
+                  <input type="password" id="confirmPassword" bind:value={confirmPassword} required>
+                </div>
+          
+                <div>
+                  <label for="name">Name (optional):</label>
+                  <input type="text" id="name" bind:value={name}>
+                </div>
+              {/if}
+          
+              {#if isLogin}
+                <div>
+                  <input type="checkbox" id="rememberMe" bind:checked={rememberMe}>
+                  <label for="rememberMe">Remember me</label>
+                </div>
+              {/if}
+          
+              {#if errorMessage}
+                <div class="error">{errorMessage}</div>
+              {/if}
+          
+              <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
+            </form>
+          
+            <div>
+              <button on:click={toggleForm}>
+                {isLogin ? 'Need an account? Sign Up' : 'Already have an account? Login'}
+              </button>
+            </div>
+          
+            {#if isLogin}
+              <div>
+                <button on:click={handleForgotPassword}>Forgot Password?</button>
               </div>
             {/if}
-          </div>
-      
-          {#if !isLogin}
-            <div>
-              <label for="confirmPassword">Confirm Password:</label>
-              <input type="password" id="confirmPassword" bind:value={confirmPassword} required>
+          
+            <div class="social-login">
+              <button on:click={() => handleSocialLogin('google')}>Login with Google</button>
+              <button on:click={() => handleSocialLogin('facebook')}>Login with Facebook</button>
             </div>
-      
-            <div>
-              <label for="name">Name (optional):</label>
-              <input type="text" id="name" bind:value={name}>
-            </div>
-          {/if}
-      
-          {#if isLogin}
-            <div>
-              <input type="checkbox" id="rememberMe" bind:checked={rememberMe}>
-              <label for="rememberMe">Remember me</label>
-            </div>
-          {/if}
-      
-          {#if errorMessage}
-            <div class="error">{errorMessage}</div>
-          {/if}
-      
-          <button type="submit">{isLogin ? 'Login' : 'Sign Up'}</button>
-        </form>
-      
-        <div>
-          <button on:click={toggleForm}>
-            {isLogin ? 'Need an account? Sign Up' : 'Already have an account? Login'}
-          </button>
-        </div>
-      
-        {#if isLogin}
-          <div>
-            <button on:click={handleForgotPassword}>Forgot Password?</button>
-          </div>
-        {/if}
-      
-        <div class="social-login">
-          <button on:click={() => handleSocialLogin('google')}>Login with Google</button>
-          <button on:click={() => handleSocialLogin('facebook')}>Login with Facebook</button>
-        </div>
+        </section>
       </main>
-  </body>
+
 
   
   <style>
-    body {
+    main {
         background-color: rgb(230, 163, 146);
         width: 100%;
         height: 100vh;
@@ -148,7 +151,7 @@
         align-items: center
     }
 
-    main {
+    .container {
       background-color: rgba(255, 255, 255, 0.356);
       width: 50%;
       padding: 20px;
