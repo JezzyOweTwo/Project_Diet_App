@@ -9,7 +9,7 @@
 
 <script>
 	async function run() {
-		const response = await (await fetch('/api')).json();
+		const response = await (await fetch('/api/user')).json();
         console.log(response);
 	}
 </script>
