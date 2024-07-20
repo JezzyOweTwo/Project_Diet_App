@@ -1,5 +1,5 @@
-import * as mongoose from 'mongoose';
-import * as bcrypt from "bcryptjs";
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.methods.matchPassword = async function (enterPassword:string) {
+userSchema.methods.matchPassword = async function (enterPassword: string) {
   return await bcrypt.compare(enterPassword, this.password);
 };
 
