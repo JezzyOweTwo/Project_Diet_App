@@ -7,6 +7,5 @@ await mongoose.connect(serverurl);
 
 export async function GET() {
     const users = await User.find();
-    const poop = "pee";
 	return json({ "poop":users }, { status: 201 });
 }
