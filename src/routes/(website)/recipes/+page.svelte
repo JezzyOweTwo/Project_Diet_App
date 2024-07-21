@@ -6,6 +6,7 @@
   let recipes: Recipe[] = [];
 
   onMount(async () => {
+    //IF NOT WORKING UPDATE YOUR ENV FILE
     const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/recipe`);
     const data = await response.json();
     recipes = data.recipes;
