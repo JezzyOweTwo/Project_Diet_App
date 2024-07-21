@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import SpoonacularCard from "../../../components/spoonacular-card/SpoonacularCard.svelte";
+  import Spoonacularcard from "../../../components/spoonacular-card/Spoonacularcard.svelte";
   import type { SpoonacularRecipe } from "../../../types/types";
 
   let recipes: SpoonacularRecipe[] = [];
@@ -29,8 +29,8 @@
   {#if errorMessage}
     <p class="error">{errorMessage}</p>
   {/if}
-  {#each recipes as recipe (recipe.id)}
-    <SpoonacularCard {recipe} />
+  {#each recipes as recipe}
+    <Spoonacularcard {recipe} />
   {/each}
 </main>
 

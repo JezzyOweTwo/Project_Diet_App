@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { SpoonacularRecipe } from "../../types/types.ts";
-  import type { Recipe } from "../../types/types";
 
   export let recipe: SpoonacularRecipe;
 </script>
