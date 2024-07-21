@@ -1,20 +1,45 @@
 import { json } from "@sveltejs/kit";
-import bcrypt from "bcryptjs";
+import type { RequestHandler } from './$types';
 import connectDB from "$lib/db";
 import User from "../../../../schemas/user";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
-connectDB()
+export const POST: RequestHandler = async ({ request }) => {
+  try {
+    await connectDB();
 
-export async function POST({ request }: { request: Request }) {
-  const { email, password } = await request.json();
-  console.log(email, password);
+    const { email, password } = await request.json();
 
-  const user = await User.findOne({ email });
-  console.log(user);
+    const user = await User.findOne({ email });
 
-  if (user && (await bcrypt.compare(password, user.password))) {
-    return json({ message: "Login successful", user }, { status: 200 });
-  } else {
-    return json({ message: "Invalid credentials" }, { status: 401 });
+    if (!user) {
+      return json({ message: "Invalid credentials" }, { status: 401 });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return json({ message: "Invalid credentials" }, { status: 401 });
+    }
+
+    const token = jwt.sign(
+      { userId: user._id },
+      process.env.JWT_SECRET || 'your_jwt_secret',
+      { expiresIn: '1h' }
+    );
+
+    return json({ 
+      message: "Login successful", 
+      token,
+      user: { 
+        id: user._id, 
+        name: user.name, 
+        email: user.email 
+      } 
+    }, { status: 200 });
+  } catch (error) {
+    console.error("Login error:", error);
+    return json({ message: "An error occurred during login" }, { status: 500 });
   }
-}
+};
