@@ -1,7 +1,19 @@
-import mongoose from "mongoose";
+import mongoose, { Document, Model } from "mongoose";
 import bcrypt from "bcryptjs";
 
-const userSchema = new mongoose.Schema(
+export interface IUser extends Document {
+  name: string;
+  email: string;
+  password: string;
+  isAdmin: boolean;
+  matchPassword(enteredPassword: string): Promise<boolean>;
+}
+
+interface IUserModel extends Model<IUser> {
+  findByEmail(email: string): Promise<IUser | null>;
+}
+
+const userSchema = new mongoose.Schema<IUser>(
   {
     name: {
       type: String,
@@ -26,17 +38,23 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-userSchema.methods.matchPassword = async function (enterPassword: string) {
-  return await bcrypt.compare(enterPassword, this.password);
+userSchema.methods.matchPassword = async function (enteredPassword: string): Promise<boolean> {
+  return await bcrypt.compare(enteredPassword, this.password);
 };
 
-userSchema.pre("save", async function (next) {
+userSchema.pre<IUser>("save", async function (next) {
   if (!this.isModified("password")) {
-    next();
+    return next();
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
-const User = mongoose.model("User", userSchema);
+userSchema.statics.findByEmail = function(email: string): Promise<IUser | null> {
+  return this.findOne({ email });
+};
+
+
+const User = mongoose.model<IUser, IUserModel>("User", userSchema);
 export default User;
