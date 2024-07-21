@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import connectDB from "$lib/db";
 import User from "../../../../schemas/user";
 
-connectDB().catch((error) => console.log("Database connection error:", error));
+connectDB()
 
 export async function POST({ request }: { request: Request }) {
   const { email, password } = await request.json();

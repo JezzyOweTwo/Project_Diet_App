@@ -1,18 +1,17 @@
 import { json } from "@sveltejs/kit";
 import connectDB from "$lib/db";
-import User from "../../../../schemas/user";
+import Recipe from "../../../../schemas/recipe";
 
-connectDB()
-
+connectDB();
 export async function GET({ params }: { params: { id: string } }) {
   try {
-    const user = await User.findById(params.id);
+    const recipe = await Recipe.findById(params.id);
 
-    if (!user) {
-      return json({ message: "User not found" }, { status: 404 });
+    if (!recipe) {
+      return json({ message: "recipe not found" }, { status: 404 });
     }
 
-    return json(user, { status: 200 });
+    return json(recipe, { status: 200 });
   } catch (error) {
     return json({ message: "Server error" }, { status: 500 });
   }
