@@ -18,7 +18,6 @@ export interface Recipe {
   mealType: string[];
 }
 
-
 export interface DailyMeal {
   breakfast?: Recipe;
   lunch?: Recipe;
@@ -37,4 +36,38 @@ export interface MealPlan {
     friday: DailyMeal;
     saturday: DailyMeal;
   };
+}
+
+// src/types/SpoonacularRecipe.ts
+
+export interface Ingredient {
+  id: number;
+  name: string;
+  amount: number;
+  unit: string;
+}
+
+export interface Step {
+  number: number;
+  step: string;
+}
+
+export interface AnalyzedInstruction {
+  name: string;
+  steps: Step[];
+}
+
+export interface SpoonacularRecipe {
+  id: number;
+  title: string;
+  image: string;
+  readyInMinutes: number;
+  servings: number;
+  cuisines: string[];
+  diets: string[];
+  dishTypes: string[];
+  extendedIngredients: Ingredient[];
+  analyzedInstructions: AnalyzedInstruction[];
+  sourceName: string;
+  sourceUrl: string;
 }

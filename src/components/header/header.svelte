@@ -1,10 +1,26 @@
 <script>
-  let navItems = [{name:`Recipes`,href:`recipes`},{name:`Meal Plan`, href: `meal-plans`}, {name: `Profile`, href: `profile`}];
+  let navItems = [
+    { name: `Recipes`, href: `recipes` },
+    { name: `Meal Plan`, href: `meal-plans` },
+    { name: `Profile`, href: `profile` },
+    { name: `Spoonacular`, href: `spoonacular` },
+  ];
 </script>
+
+<header>
+  <div class="logo"><a href="/home"> Recipe Manager</a></div>
+  <nav>
+    <ul class="nav-links">
+      {#each navItems as item}
+        <li><a href={`/${item.href}`}>{item.name}</a></li>
+      {/each}
+    </ul>
+  </nav>
+</header>
 
 <style>
   header {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
     padding: 1rem;
     display: flex;
@@ -33,20 +49,25 @@
     font-weight: bold;
   }
 
-    a { text-decoration: none; color: inherit; }
-a:visited { text-decoration: none; color: inherit;}
-a:hover { text-decoration: none; color: inherit; }
-a:focus { text-decoration: none; color: inherit; }
-a:hover, a:active { text-decoration: none; color: inherit;}
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:visited {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:focus {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:hover,
+  a:active {
+    text-decoration: none;
+    color: inherit;
+  }
 </style>
-
-<header>
-  <div class="logo"><a href="/home"> Recipe Manager</a></div>
-  <nav>
-    <ul class="nav-links">
-      {#each navItems as item}
-        <li><a href={`/${item.href}`}>{item.name}</a></li>
-      {/each}
-    </ul>
-  </nav>
-</header>
