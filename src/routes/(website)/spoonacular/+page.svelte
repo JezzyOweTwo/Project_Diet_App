@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import SpoonacularCard from "../../../components/spoonacular-card/SpoonacularCard.svelte";
-  import type { SpoonacularRecipe } from "../../../types/SpoonacularRecipe";
+  import type { SpoonacularRecipe } from "../../../types/types";
 
   let recipes: SpoonacularRecipe[] = [];
   let errorMessage: string = "";
