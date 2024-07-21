@@ -16,17 +16,6 @@
   }
 </script>
 
-<header>
-  <div class="logo"><a href="/home"> Recipe Manager</a></div>
-  <nav>
-    <ul class="nav-links">
-      {#each navItems as item}
-        <li><a href={`/${item.href}`}>{item.name}</a></li>
-      {/each}
-    </ul>
-  </nav>
-</header>
-
 <style>
   header {
     background-color: #4caf50;
