@@ -8,7 +8,9 @@
 
   onMount(async () => {
     try {
-      const response = await fetch("/api/spoonacular");
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/spoonacular`
+      );
       if (response.ok) {
         const data = await response.json();
         recipes = data; // Ensure the API response contains an array of recipes
