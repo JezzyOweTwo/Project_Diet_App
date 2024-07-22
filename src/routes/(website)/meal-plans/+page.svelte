@@ -9,7 +9,7 @@
 
   onMount(async () => {
     try {
-      const response = await fetch('https://dummyjson.com/recipes');
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/recipe`);
       if (!response.ok) throw new Error('Network response was not ok');
       const data = await response.json();
       recipes = data.recipes;
