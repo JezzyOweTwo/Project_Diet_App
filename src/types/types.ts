@@ -1,3 +1,5 @@
+/** @format */
+
 // types.ts
 export interface Recipe {
   id: number;
@@ -18,11 +20,11 @@ export interface Recipe {
   mealType: string[];
 }
 
-export interface DailyMeal {
-  breakfast?: Recipe;
-  lunch?: Recipe;
-  dinner?: Recipe;
-}
+export type DailyMeal = {
+  breakfast?: Recipe | null;
+  lunch?: Recipe | null;
+  dinner?: Recipe | null;
+};
 
 export interface MealPlan {
   id: string;
