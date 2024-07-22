@@ -74,57 +74,68 @@
     // Update local storage
     localStorage.setItem('mealPlans', JSON.stringify(mealPlans));
   }
+
+  function resetDropdowns(day: string) {
+    const dropdowns = document.querySelectorAll(`select[data-day="${day}"]`);
+    dropdowns.forEach(dropdown => {
+      (dropdown as HTMLSelectElement).selectedIndex = 0;
+    });
+  }
 </script>
 
 <main>
   <div class="container">
     <div class="dropdowns">
-  <h1>Meal Plans</h1>
+      <h1>Meal Plans</h1>
 
-  {#each daysOfWeek as day}
-    <h2>{day.charAt(0).toUpperCase() + day.slice(1)}</h2>
-    <div class="meal-type">
-      <label>Breakfast:</label>
-      <select on:change={(e) => handleSaveMealPlan(day, 'breakfast', e)}>
-        <option value="" disabled selected>Select a recipe</option>
-        {#each recipes as recipe}
-          <option value={recipe.name}>{recipe.name}</option>
-        {/each}
-      </select>
+      {#each daysOfWeek as day}
+        <div class="day-section">
+          <h2>{day.charAt(0).toUpperCase() + day.slice(1)}</h2>
+          <div class="meal-type">
+            <label>Breakfast:</label>
+            <select data-day={day} on:change={(e) => handleSaveMealPlan(day, 'breakfast', e)}>
+              <option value="" disabled selected>Select a recipe</option>
+              {#each recipes as recipe}
+                <option value={recipe.name}>{recipe.name}</option>
+              {/each}
+            </select>
+          </div>
+
+          <div class="meal-type">
+            <label>Lunch:</label>
+            <select data-day={day} on:change={(e) => handleSaveMealPlan(day, 'lunch', e)}>
+              <option value="" disabled selected>Select a recipe</option>
+              {#each recipes as recipe}
+                <option value={recipe.name}>{recipe.name}</option>
+              {/each}
+            </select>
+          </div>
+
+          <div class="meal-type">
+            <label>Dinner:</label>
+            <select data-day={day} on:change={(e) => handleSaveMealPlan(day, 'dinner', e)}>
+              <option value="" disabled selected>Select a recipe</option>
+              {#each recipes as recipe}
+                <option value={recipe.name}>{recipe.name}</option>
+              {/each}
+            </select>
+          </div>
+
+          <button on:click={() => resetDropdowns(day)}>Reset</button>
+        </div>
+      {/each}
+
     </div>
-
-    <div class="meal-type">
-      <label>Lunch:</label>
-      <select on:change={(e) => handleSaveMealPlan(day, 'lunch', e)}>
-        <option value="" disabled selected>Select a recipe</option>
-        {#each recipes as recipe}
-          <option value={recipe.name}>{recipe.name}</option>
+    <div class="plan">
+      <h2>Your Meal Plans</h2>
+      <div class="meal-plans-list">
+        {#each mealPlans as mealPlan}
+          <MealPlanCard {mealPlan} />
         {/each}
-      </select>
+      </div>
+      <button on:click={clearMealPlans}>Clear Meal Plan</button>
     </div>
-
-    <div class="meal-type">
-      <label>Dinner:</label>
-      <select on:change={(e) => handleSaveMealPlan(day, 'dinner', e)}>
-        <option value="" disabled selected>Select a recipe</option>
-        {#each recipes as recipe}
-          <option value={recipe.name}>{recipe.name}</option>
-        {/each}
-      </select>
-    </div>
-  {/each}
-
- </div>
-<div class="plan">
-  <h2>Your Meal Plans</h2>
-  <div class="meal-plans-list">
-    {#each mealPlans as mealPlan}
-      <MealPlanCard {mealPlan} />
-    {/each}
   </div>
-  <button on:click={clearMealPlans}>Clear Meal Plan</button>
-  </div>
-</div>
 </main>
 
 <style>
@@ -161,5 +172,13 @@
   .container {
     display: grid;
     grid-template-columns: auto auto;
+  }
+
+  .day-section {
+    margin-bottom: 30px;
+  }
+
+  .day-section button {
+    margin-top: 10px;
   }
 </style>
