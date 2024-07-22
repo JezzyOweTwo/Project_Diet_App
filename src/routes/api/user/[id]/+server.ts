@@ -1,8 +1,5 @@
 import { json } from "@sveltejs/kit";
-import connectDB from "$lib/db";
 import User from "../../../../schemas/user";
-
-connectDB()
 
 export async function GET({ params }: { params: { id: string } }) {
   try {

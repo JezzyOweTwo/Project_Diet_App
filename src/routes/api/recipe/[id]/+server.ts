@@ -1,8 +1,7 @@
 import { json } from "@sveltejs/kit";
-import connectDB from "$lib/db";
 import Recipe from "../../../../schemas/recipe";
 
-connectDB();
+
 export async function GET({ params }: { params: { id: string } }) {
   try {
     const recipe = await Recipe.findById(params.id);

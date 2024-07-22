@@ -1,13 +1,13 @@
 import { json } from "@sveltejs/kit";
 import type { RequestHandler } from './$types';
-import connectDB from "$lib/db";
+
 import User from "../../../../schemas/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const POST: RequestHandler = async ({ request }) => {
   try {
-    await connectDB();
+    
 
     const { email, password } = await request.json();
 
