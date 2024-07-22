@@ -54,7 +54,8 @@
       mealPlans = [...mealPlans, mealPlan];
     }
 
-    mealPlan.days[day][type] = recipe;
+    mealPlan.days[day as keyof typeof mealPlan.days][type] = recipe;
+
 
     // Update local storage
     localStorage.setItem('mealPlans', JSON.stringify(mealPlans));
@@ -87,44 +88,44 @@
   <div class="container">
     <div class="dropdowns">
       <h1>Meal Plans</h1>
-
+  
       {#each daysOfWeek as day}
         <div class="day-section">
           <h2>{day.charAt(0).toUpperCase() + day.slice(1)}</h2>
           <div class="meal-type">
-            <label>Breakfast:</label>
-            <select data-day={day} on:change={(e) => handleSaveMealPlan(day, 'breakfast', e)}>
+            <label for={`breakfast-${day}`}>Breakfast:</label>
+            <select id={`breakfast-${day}`} data-day={day} on:change={(e) => handleSaveMealPlan(day, 'breakfast', e)}>
               <option value="" disabled selected>Select a recipe</option>
               {#each recipes as recipe}
                 <option value={recipe.name}>{recipe.name}</option>
               {/each}
             </select>
           </div>
-
+  
           <div class="meal-type">
-            <label>Lunch:</label>
-            <select data-day={day} on:change={(e) => handleSaveMealPlan(day, 'lunch', e)}>
+            <label for={`lunch-${day}`}>Lunch:</label>
+            <select id={`lunch-${day}`} data-day={day} on:change={(e) => handleSaveMealPlan(day, 'lunch', e)}>
               <option value="" disabled selected>Select a recipe</option>
               {#each recipes as recipe}
                 <option value={recipe.name}>{recipe.name}</option>
               {/each}
             </select>
           </div>
-
+  
           <div class="meal-type">
-            <label>Dinner:</label>
-            <select data-day={day} on:change={(e) => handleSaveMealPlan(day, 'dinner', e)}>
+            <label for={`dinner-${day}`}>Dinner:</label>
+            <select id={`dinner-${day}`} data-day={day} on:change={(e) => handleSaveMealPlan(day, 'dinner', e)}>
               <option value="" disabled selected>Select a recipe</option>
               {#each recipes as recipe}
                 <option value={recipe.name}>{recipe.name}</option>
               {/each}
             </select>
           </div>
-
+  
           <button on:click={() => resetDropdowns(day)}>Reset</button>
         </div>
       {/each}
-
+  
     </div>
     <div class="plan">
       <h2>Your Meal Plans</h2>
@@ -136,6 +137,7 @@
       <button on:click={clearMealPlans}>Clear Meal Plan</button>
     </div>
   </div>
+  
 </main>
 
 <style>
