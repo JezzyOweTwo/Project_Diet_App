@@ -9,7 +9,7 @@
   <h2>{mealPlan.name}</h2>
   {#each Object.entries(mealPlan.days) as [day, meals]}
     <div class="day">
-      <h3>{day}</h3>
+      <h3>{day.charAt(0).toUpperCase() + day.slice(1)}</h3>
       <p>Breakfast: {meals.breakfast ? meals.breakfast.name : 'Not selected'}</p>
       <p>Lunch: {meals.lunch ? meals.lunch.name : 'Not selected'}</p>
       <p>Dinner: {meals.dinner ? meals.dinner.name : 'Not selected'}</p>
