@@ -4,28 +4,73 @@
   import type { Recipe } from "../../../types/types";
 
   let recipes: Recipe[] = [];
+  let errorMessage: string = "";
+  let boxes: HTMLDivElement[] = [];
 
-  onMount(async () => {
-    //IF NOT WORKING UPDATE YOUR ENV FILE
-    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/recipe`);
-    const data = await response.json();
-    recipes = data.recipes;
+  async function fetchRecipes() {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/recipe`);
+      const data = await response.json();
+      recipes = data.recipes;
+      checkBoxes();
+    } catch (error) {
+      errorMessage = "An error occurred while fetching recipes from the server";
+    }
+  }
+
+  function checkBoxes() {
+    const boxes = document.querySelectorAll(".box");
+
+    const triggerBottom = window.innerHeight;
+    console.log(triggerBottom, "trigger bottom");
+
+    boxes.forEach((box, index) => {
+      const boxTop = box.getBoundingClientRect().top;
+      //console.log(boxTop, "box top ", index);
+
+      if (boxTop < triggerBottom) {
+        box.classList.add("show");
+        console.log(box.classList, "box class");
+      } else {
+        box.classList.remove("show");
+      }
+    });
+  }
+
+  onMount(() => {
+    fetchRecipes();
+
+    window.addEventListener("scroll", checkBoxes);
+
+    return () => {
+      window.removeEventListener("scroll", checkBoxes);
+    };
   });
 </script>
 
 <main>
   <h1>Recipes</h1>
   {#each recipes as recipe}
-    <RecipeCard {recipe} />
+    <div class="box show">
+      <RecipeCard {recipe} />
+    </div>
   {/each}
 </main>
 
 <style>
-  main {
+  .box {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: 20vh;
+    transform: translateX(100%);
+    transition: transform 0.6s ease;
+  }
+  .box:nth-of-type(even) {
+    transform: translateX(-100%);
+  }
+  .box.show {
+    transform: translateX(0%);
   }
 </style>
