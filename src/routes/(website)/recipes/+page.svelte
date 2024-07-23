@@ -21,7 +21,7 @@
   function checkBoxes() {
     const boxes = document.querySelectorAll(".box");
 
-    const triggerBottom = window.innerHeight;
+    const triggerBottom = (window.innerHeight / 5) * 4;
     console.log(triggerBottom, "trigger bottom");
 
     boxes.forEach((box, index) => {
@@ -58,6 +58,9 @@
 </main>
 
 <style>
+  h1 {
+    text-align: center;
+  }
   .box {
     display: flex;
     flex-direction: column;
@@ -65,12 +68,15 @@
     justify-content: center;
     min-height: 20vh;
     transform: translateX(100%);
-    transition: transform 0.6s ease;
+    transition: transform 0.8s ease;
   }
   .box:nth-of-type(even) {
     transform: translateX(-100%);
   }
   .box.show {
     transform: translateX(0%);
+  }
+  main {
+    overflow-x: hidden;
   }
 </style>
