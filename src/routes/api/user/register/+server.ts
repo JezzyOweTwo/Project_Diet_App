@@ -14,13 +14,12 @@ export const POST: RequestHandler = async ({ request }) => {
       return json({ message: "User email already taken" }, { status: 409 });
     }
 
-    const user = new User({ name, password, email });
-    await user.save();
+    const user = await User.create({ name, password, email });
 
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET || "your_jwt_secret",
-      { expiresIn: "1h" }
+      { expiresIn: "30d" }
     );
 
     return json(
