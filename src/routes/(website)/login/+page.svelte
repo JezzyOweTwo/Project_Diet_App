@@ -43,10 +43,7 @@
       return;
     }
     
-    if (password.length < 8) {
-      errorMessage = 'Password must be at least 8 characters long.';
-      return;
-    }
+  
     
     if (!isLogin && password !== confirmPassword) {
       errorMessage = 'Passwords do not match.';
@@ -67,7 +64,7 @@
       console.log('Response text:', responseText);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.message}`);
       }
       
       let data;
@@ -114,7 +111,7 @@
   
       <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" bind:value={password} on:input={() => checkPasswordStrength(password)} required>
+        <input type="password" id="password" minlength="8" bind:value={password} on:input={() => checkPasswordStrength(password)} required>
         {#if !isLogin}
           <div class="password-strength">
             Password strength: 
