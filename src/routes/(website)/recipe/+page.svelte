@@ -1,36 +1,50 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
   import RecipeCard from "../../../components/recipe-card/recipe-card.svelte";
   import type { Recipe } from "../../../types/types";
 
   let recipes: Recipe[] = [];
   let errorMessage: string = "";
-  let boxes: HTMLDivElement[] = [];
+  let check: boolean = false;
 
-  async function fetchRecipes() {
+  export let keyword: string = "";
+
+  async function fetchRecipes(key: string = "") {
     try {
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/recipe`);
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_URL}/recipe?keyword=${key}`
+      );
       const data = await response.json();
       recipes = data.recipes;
+      if (recipes.length) {
+        check = true;
+        console.log(check);
+      }
       checkBoxes();
     } catch (error) {
       errorMessage = "An error occurred while fetching recipes from the server";
     }
   }
 
+  const searchRecipes = async () => {
+    goto(`?keyword=${encodeURIComponent(keyword)}`);
+    check = false;
+    console.log(check, " search");
+
+    fetchRecipes(keyword);
+  };
+
   function checkBoxes() {
     const boxes = document.querySelectorAll(".box");
 
     const triggerBottom = (window.innerHeight / 5) * 4;
-    console.log(triggerBottom, "trigger bottom");
 
     boxes.forEach((box, index) => {
       const boxTop = box.getBoundingClientRect().top;
-      //console.log(boxTop, "box top ", index);
 
       if (boxTop < triggerBottom) {
         box.classList.add("show");
-        console.log(box.classList, "box class");
       } else {
         box.classList.remove("show");
       }
@@ -38,8 +52,14 @@
   }
 
   onMount(() => {
-    fetchRecipes();
-
+    document.addEventListener("fetchAllRecipes", () => {
+      fetchRecipes("");
+    });
+    const urlParams = new URLSearchParams(window.location.search);
+    keyword = urlParams.get("keyword") || "";
+    if (keyword) {
+      fetchRecipes(keyword);
+    } else fetchRecipes("");
     window.addEventListener("scroll", checkBoxes);
 
     return () => {
@@ -49,12 +69,18 @@
 </script>
 
 <main>
+  <input type="text" bind:value={keyword} placeholder="Search recipes..." />
+  <button on:click={searchRecipes}>Search</button>
   <h1>Recipes</h1>
-  {#each recipes as recipe}
-    <div class="box show">
-      <RecipeCard {recipe} />
-    </div>
-  {/each}
+  {#if check}
+    {#each recipes as recipe}
+      <div class="box show">
+        <RecipeCard {recipe} />
+      </div>
+    {/each}
+  {:else}
+    <h1>No recipes found with {keyword}</h1>
+  {/if}
 </main>
 
 <style>

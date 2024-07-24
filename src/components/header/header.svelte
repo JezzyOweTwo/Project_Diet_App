@@ -1,20 +1,42 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import { goto } from "$app/navigation";
+  import { createEventDispatcher } from "svelte";
+
+  const dispatch = createEventDispatcher();
+
+  function handleClick() {
+    dispatch("fetchAllRecipes");
+  }
 
   let navItems = [
-    {name: 'Recipes', href: 'recipes'},
-    {name: 'Meal Plan', href: 'meal-plans'},
-    {name: 'Profile', href: 'profile'}
+    // { name: "Recipes", href: "recipe" },
+    { name: "Meal Plan", href: "meal-plans" },
+    { name: "Profile", href: "profile" },
   ];
 
   function handleLogout() {
     // Remove the token from localStorage
-    localStorage.removeItem('token');
-    
+    localStorage.removeItem("token");
+
     // Redirect to the login page
-    goto('/login');
+    goto("/login");
   }
 </script>
+
+<header>
+  <div class="logo"><a href="/home">Recipe Manager</a></div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href={`/recipe`} on:click={handleClick}>Recipes</a></li>
+      {#each navItems as item}
+        <li><a href={`/${item.href}`}>{item.name}</a></li>
+      {/each}
+      <li>
+        <button class="logout-button" on:click={handleLogout}>Logout</button>
+      </li>
+    </ul>
+  </nav>
+</header>
 
 <style>
   header {
@@ -33,7 +55,8 @@
     align-items: center;
   }
 
-  .nav-links a, .nav-links button {
+  .nav-links a,
+  .nav-links button {
     color: white;
     text-decoration: none;
     font-weight: bold;
@@ -48,11 +71,27 @@
     font-weight: bold;
   }
 
-  a { text-decoration: none; color: inherit; }
-  a:visited { text-decoration: none; color: inherit; }
-  a:hover { text-decoration: none; color: inherit; }
-  a:focus { text-decoration: none; color: inherit; }
-  a:hover, a:active { text-decoration: none; color: inherit; }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:visited {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:hover {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:focus {
+    text-decoration: none;
+    color: inherit;
+  }
+  a:hover,
+  a:active {
+    text-decoration: none;
+    color: inherit;
+  }
 
   .logout-button {
     background: none;
@@ -66,15 +105,3 @@
     text-decoration: underline;
   }
 </style>
-
-<header>
-  <div class="logo"><a href="/home">Recipe Manager</a></div>
-  <nav>
-    <ul class="nav-links">
-      {#each navItems as item}
-        <li><a href={`/${item.href}`}>{item.name}</a></li>
-      {/each}
-      <li><button class="logout-button" on:click={handleLogout}>Logout</button></li>
-    </ul>
-  </nav>
-</header>
