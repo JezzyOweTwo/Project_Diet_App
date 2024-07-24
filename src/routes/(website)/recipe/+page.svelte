@@ -19,7 +19,6 @@
       recipes = data.recipes;
       if (recipes.length) {
         check = true;
-        console.log(check);
       }
       checkBoxes();
     } catch (error) {
@@ -30,8 +29,6 @@
   const searchRecipes = async () => {
     goto(`?keyword=${encodeURIComponent(keyword)}`);
     check = false;
-    console.log(check, " search");
-
     fetchRecipes(keyword);
   };
 

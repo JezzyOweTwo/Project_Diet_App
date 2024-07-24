@@ -4,7 +4,6 @@ import "dotenv/config";
 
 async function connectDB(): Promise<void> {
   try {
-    console.log(import.meta.env.VITE_DATABASE_URL);
     const serverUrl = import.meta.env.VITE_DATABASE_URL;
     if (!serverUrl) {
       throw new Error(
